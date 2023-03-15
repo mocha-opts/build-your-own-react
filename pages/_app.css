@@ -14,10 +14,14 @@
 }
 .ch-scrollycoding-step-content[data-selected] {
   border-color: transparent;
-  border-left: 3px solid slateblue;
+  border-left: 3px solid bisque;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   transition: cubic-bezier(0.86, 0, 0.07, 1);
+  font-size: 18px;
+}
+.ch-scrollycoding-step-content:not([data-selected]) {
+  color: gainsboro;
 }
 .my-class {
   background-image: url(https://pomb.us/static/de664d437c94d478778b965c66c91f99/d3fa7/fiber0.png);
