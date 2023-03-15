@@ -15,11 +15,9 @@
     "@next/mdx": "13.1.2",
     "next": "13.1.2",
     "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "react-dom": "^18.1.0",
+    "shiki": "^0.14.1"
   },
   "author": "",
   "license": "ISC"
 }
-
-
-

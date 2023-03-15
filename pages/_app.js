@@ -1,5 +1,5 @@
 import "@code-hike/mdx/styles";
-
+import "./_app.css";
 function MyApp({ Component, pageProps }) {
   return (
     <article

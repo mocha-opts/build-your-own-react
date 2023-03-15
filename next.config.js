@@ -1,5 +1,5 @@
 const { remarkCodeHike } = require("@code-hike/mdx");
-const theme = require("shiki/themes/material-palenight.json");
+const theme = require("shiki/themes/dark-plus.json");
 
 const withMDX = require("@next/mdx")({
   extension: /\.mdx?$/,
