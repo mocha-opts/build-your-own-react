@@ -61,15 +61,13 @@ const container = document.getElementById("root");
 ReactDOM.render(element, container);
 ```
 
-React.createElement 这个方法通过传入的参数创建了一个对象。抛开这个方法会对参数的一些验证以外，这就是它所做的全部事情。以此为基础，我们也可以简单模仿一下 React.createElement 创建的对象。
+**React.createElement** 方法通过传入的参数创建一个对象, 我们也可以简单模仿一下 React.createElement 创建的对象。
 
-我们所定义的元素是一个具有两个属性（type 和 props）的对象（当然真正的 ReactElement 可不止这两个属性，不过在这里我们只关心这两个）。
+我们所定义的元素是一个具有两个属性（type 和 props）的对象（当然真正的 ReactElement 不止这两个属性，不过在这里我们只关心这两个）。
 
 type 指的是我们想要创建的 DOM 元素类型的字符串，等同于通过 document.createElement 方法来创建 DOM 元素时传入的 tagName。type 也可以是一个函数，但是为了不造成困惑，这个等到第七步时我们再说。
 
-props 也是一个对象，它存放的是 JSX 中设置的特性（attributes）的键与值，以及一个特殊的属性（property）children。
-
-children 在这里是一个字符串，不过更多时候它会是一个包含许多元素的数组，这也是为什么众多的元素通过错综复杂的关系能够构建成树的原因。
+props 也是一个对象，它存放的是 JSX 属性的键和值，还有一个特殊的属性 **children**。
 
 ---
 
@@ -77,7 +75,9 @@ children 在这里是一个字符串，不过更多时候它会是一个包含�
 
 ```
 
-另外我们需要来处理的一个方法是 ReactDOM.render。render 是 React 来改变 DOM 的方法，这样简单的一句描述有些过于宽泛了，不过我们先可以根据这点来试着捣鼓捣鼓它是怎么改变 DOM 的。
+还需要我们来处理的一个方法就是 ReactDOM.render。
+
+render 是 React 来改变 DOM 的方法，这样简单的一句描述有些过于宽泛了，不过我们先可以根据这点来试着捣鼓捣鼓它是怎么改变 DOM 的。
 
 ---
 
@@ -114,7 +114,7 @@ container.appendChild(node)
 
 然后我们来为子元素创建相应的节点。这里的话只有一个子元素，为此我们需要创建一个文本节点。之所以选择创建文本节点（textNode）而不是设置 innerText 属性，是因为这样做的话之后我们能够通过同一种方式来处理所有元素。
 
-同时需要注意，我们在为节点设置 nodeValue 属性的这个过程，与设置节点 h1 设置 title 属性类似，就像是在设置一个文本节点的 nodeValue 为 Hello，即 `props: {nodeValue: "hello"}`。
+同时需要注意，我们在为节点设置 nodeValue 属性的这个过程，和设置节点 h1 设置 title 属性类似，就像是在设置一个文本节点的 nodeValue 为 Hello，即 `props: {nodeValue: "hello"}`。
 
 ---
 
@@ -126,7 +126,7 @@ container.appendChild(node)
 
 ---
 
-到此为止，我们就完成了用原生的 JS 来替代 JSX 语法这一目标，完整的代码如下：
+到此为止，我们就完成了用原生的 JS 来替代 JSX 语法这一目标
 
 ```js app.js
 
@@ -153,11 +153,11 @@ const container = document.getElementById("root");
 ReactDOM.render(element, container);
 ```
 
-让我们从另外一个 React App 开始。这次，我们来尝试创建一个自己的 React 来替代真正的 React。
+现在,我们要创建一个自己的 React 来替代真正的 React
 
-从实现 createElement 方法开始吧。
+就从实现 `createElement` 方法开始吧
 
-首先，在 JSX 转换到 JS 的这个过程中，让我们看看 createElement` 这个方法到底都做了些什么吧。
+首先，在 JSX 转换到 JS 的这个过程中，让我们看看` createElement` 这个方法到底都做了些什么
 
 ---
 
@@ -172,7 +172,9 @@ const container = document.getElementById("root");
 ReactDOM.render(element, container);
 ```
 
-在前面我们提到过，一个元素（我们简化过的）实际上就是一个带有 type 和 props 这两个属性的对象。我们的方法唯一需要操心的就是如何去创建这个对象。
+在前面我们提到过，一个元素（我们简化的）实际上就是一个带有 type 和 props 这两个属性的对象。
+
+我们的方法唯一需要思考的就是如何去创建这个对象。
 
 ---
 
@@ -197,14 +199,14 @@ const container = document.getElementById("root")
 ReactDOM.render(element, container)
 ```
 
-在以上代码中，我们使用展开操作符... 来处理 props，使用剩余参数语法...（没错，还是这三个点，都是 ES6 语法）来处理 children，经过剩余参数语法的处理，children 就变成了一个数组。
+在代码中，我们使用展开操作符... 来处理 children，这样，children 就变成了一个数组。
 
 例如，createElement("div") 返回：
 
 ```javascript
 {
-type: "div",
-props: { children: [] }
+  type: "div",
+  props: { children: [] }
 }
 ```
 
@@ -212,8 +214,8 @@ createElement("div", null, a) 返回：
 
 ```javascript
 {
-type: "div",
-props: { children: [a] }
+  type: "div",
+  props: { children: [a] }
 }
 ```
 
@@ -221,8 +223,8 @@ createElement("div", null, a, b) 返回：
 
 ```javascript
 {
-type: "div",
-props: { children: [a, b] }
+  type: "div",
+  props: { children: [a, b] }
 }
 ```
 
@@ -263,9 +265,9 @@ const container = document.getElementById("root")
 ReactDOM.render(element, container)
 ```
 
-需要注意的是，children 数组中的元素不一定是对象，也有可能是原始类型的值如 number 或 string。对于这种元素，我们需要封装成一个对象，并为其创建一种特殊的 type：TEXT_ELEMENT。
+需要注意的是，children 数组中的元素不一定是对象，也有可能是原始类型的值如 number 或 string。对于这种元素，我们需要封装成一个对象，并为其创建一种特殊的 type：TEXT_ELEMENT
 
-需要注意真正的 React 并没有封装原始类型的值或在没有 children 时创建一个空数组，我们这样做是为了简化我们的代码，因为我们的目标是易于理解，而不是追求高性能。
+官方的 `React` 并没有封装原始类型的值,也没有在 没有 children 时创建一个空数组.我们这样做是为了简化代码，因为我们的目标是理解，而不是追求高性能
 
 ---
 
@@ -306,9 +308,9 @@ ReactDOM.render(element, container)
 
 到此为止，我们还没有替换 React.createElement 这个方法
 
-替换 React 的第一步，给我们的库取个名字吧 🤨。
+替换 React 的第一步，给我们的库取个名字吧 🤨
 
-名字要听起来像 React🤔，同时也要有教学（_didactic_）的味道 🧐。
+名字要听起来像 React🤔，同时也要有教学（_didactic_）的味道 🧐
 
 ---
 
@@ -448,7 +450,7 @@ const container = document.getElementById("root")
 Didact.render(element, container)
 ```
 
-接着，让我们关注最后一行代码。是的没错，本节的目标就是实现我们自己的 render 方法以替换 ReactDOM.render。
+接着，我们来关注最后一行代码。下面的目标就是实现我们自己的 render 方法以替换 ReactDOM.render。
 
 ---
 
@@ -609,7 +611,7 @@ Didact.render(element, container)
 
 ---
 
-等等，还有文本元素呢，如果元素的类型 type 是 TEXT_ELEMENT，我们要为其创建文本节点。
+等等，别忘了文本元素. 如果元素是`TEXT_ELEMENT`类型 ，我们要为它创建文本节点。
 
 ```js focus=26:29
 function createElement(type, props, ...children) {
@@ -668,7 +670,7 @@ Didact.render(element, container)
 
 ---
 
-最后，节点有了，就该为其添加属性 props 了。记得需要排除 props 中的 children。
+最后，节点有了，就该为它添加`props` 属性了。记得需要排除 `props` 中的 `children`。
 
 ```js focus=31:37
 function createElement(type, props, ...children) {
@@ -805,9 +807,13 @@ const container = document.getElementById("root")
 Didact.render(element, container)
 ```
 
-注意以上代码，因为采用的是递归，一旦我们开始渲染，在整个元素树渲染的过程是无法停下来的。如果元素树非常复杂的话，就会占用主线程非常多的时间，从而造成阻塞。试着想一下，如果浏览器需要处理优先级更高的事件如用户输入、保持动画流畅运行，这时浏览器就不得不等到 render 方法执行完后再来处理这些事情。
+注意以上代码，因为采用的是递归，一旦我们开始渲染，在整个元素树渲染的过程是无法停下来的。
 
-既然递归会造成这么严重的问题，那我们之前为什么要采用递归的方式呢？我猜是因为 React 之前也是采用不可中断的递归的方式。（误
+如果元素树非常复杂的话，就会占用主线程非常多的时间，从而造成阻塞。
+
+试着想一下，如果浏览器需要处理优先级更高的事件如用户输入、保持动画流畅运行，这时浏览器就不得不等到 render 方法执行完后再来处理这些事情。
+
+既然递归会造成这么严重的问题，那我们之前为什么要采用递归的方式呢？ 我猜是因为 React 之前也是采用不可中断的递归的方式。😈
 
 ---
 
@@ -893,17 +899,21 @@ Didact.render(element, container)
 
 走远了，让我们回到正题，来将这个过程变得可中断。
 
-首先，我们来将整个任务拆分成一个个小的任务单元 work unit，然后在每次执行完一个小的任务单元后询问一下浏览器有没有其他需要优先处理的事情。这个反复的过程我们用 requestIdleCallback 这个原生方法来实现，这个函数会在浏览器空闲的时候执行，这样的话像一些关键事件如动画和用户输入就不会被影响延迟。requestIdleCallback 同时也提供了一个类似于截止时间 deadline 的参数，如果传入的方法执行时间超过了这个时间，就会停止执行将主动权交还到浏览器手中。
+首先，我们来将整个任务拆分成一个个小的任务单元 work unit，然后在每次执行完一个小的任务单元后询问一下浏览器有没有其他需要优先处理的事情。
 
-注意 React 不再使用 requestIdleCallback 这个方法，因为他们为了保证兼容性自己实现了一套！不过从方法的概念上是一致的，所以我们就采用 requestIdleCallback 这个方法。
+这个过程我们用`requestIdleCallback`浏览器原生方法来实现, 可以理解为`setTimeout`,但有差异.
+
+当主线程空闲时，浏览器将运行回调，而不是告诉我们什么时候运行。
 
 ---
 
-```js focus=47,55:56,58
+```js focus=47:49,53,55:56,58
 
 ```
 
-requestIdlecallback 还为我们提供了一个截止日期参数。我们可以使用它来检查我们有多少时间，直到浏览器需要再次控制为止。
+requestIdlecallback 还为我们提供了一个截止日期参数。可以用它来检查到浏览器需要再次控制为止还有多少时间。
+
+注意 React 不再使用 requestIdleCallback 这个方法，因为他们为了保证兼容性自己实现了一套！不过从方法的概念上是一致的，所以我们就采用 requestIdleCallback 这个方法。
 
 ---
 
@@ -911,18 +921,15 @@ requestIdlecallback 还为我们提供了一个截止日期参数。我们可以
 
 ```
 
-在开始这个循环之前，我们需要先指定第一个任务单元，为此我们创建了 performUnitOfWork 方法，在这个方法中需要去执行这个任务，同时最后返回下一个需要执行的任务单元 nextUnitOfWork。
+在开始这个循环之前，我们需要先指定第一个任务单元，因此我们创建一个 `performUnitOfWork` 方法.
+
+在这个方法中需要去执行这个任务，同时最后返回下一个需要执行的任务单元 `nextUnitOfWork`。
 
 ---
 
 </CH.Scrollycoding>
 
 <CH.Scrollycoding>
-
-```
-# withClass[1] my-class
-<>
-```
 
 ## 第四步：Fibers
 
@@ -932,7 +939,7 @@ requestIdlecallback 还为我们提供了一个截止日期参数。我们可以
 
 那么 fiber tree 到底是长啥样的呢？
 
-举个 🌰，比如我们想要渲染如下一棵元素树。
+举个 🌰，比如我们想要渲染一棵元素树。
 
 ```js
 Didact.render(
@@ -949,7 +956,13 @@ Didact.render(
 
 对应的 fiber tree 就长下面这个样子。
 
-在 render 方法中，我们先创建 root fiber 并把它作为第一个任务单元，即第一个 nextUnitOfWork。其余的任务会在 performUnitOfWork 这个方法中去处理。对于每个 fiber 我们需要在 performUnitOfWork 这个方法中做三件事情：
+![0](https://pomb.us/static/de664d437c94d478778b965c66c91f99/d3fa7/fiber0.png)
+
+在 render 方法中，我们先创建 `root fiber` 并把它作为第一个任务单元，即第一个 `nextUnitOfWork`。
+
+其余的任务会在 `performUnitOfWork` 这个方法中去处理。
+
+对于每个 fiber 我们需要在 performUnitOfWork 这个方法中做三件事情：
 
 1. 将元素转换为节点并添加到 DOM 上。
 2. 为该元素的子元素 children 创建 fibers。
@@ -957,13 +970,19 @@ Didact.render(
 
 fiber tree 的其中一个目标就是为了能够让设置下一个任务单元更加容易，这也是为什么每个 fiber 都需要有一个指针（逻辑上）指向第一个子元素 child，一个指针指向兄弟节点 sibling，一个指针指向父节点 parent。
 
-当我们执行完一个 fiber 的任务时，如果它的 child 指针指向的元素不为空的话，则该元素将会被指定为 nextUnitOfWork。以上图中的 fiber tree 为例，当我们执行完标签为 div 的 fiber 的任务时，nextUnitOfWork 将会是它的 child 指针指向的标签为 h1 的 fiber。
+![1](https://pomb.us/static/a88a3ec01855349c14302f6da28e2b0c/d3fa7/fiber1.png)
 
-如果一个 fiber 的 child 指针指向的元素为空，即该 fiber 不存在 child 时，我们将会指定 sibling 对应的 fiber 作为 nextUnitOfWork。还是以上图的 fiber tree 为例，标签为 p 的 fiber 没有 child，所以我们将 p 对应的 sibling，即标签为 a 的 fiber 作为 nextUnitOfWork。
+当我们执行完一个 fiber 的任务时，如果它的 child 指针指向的元素不为空的话，则该元素将会被指定为 `nextUnitOfWork`。
 
-如果一个 fiber 即没有 child 也没有 sibling，我们就指定 nextUnitOfWork 为该 fiber 的叔叔 uncle，即该 fiber 的父节点 parent 的兄弟节点 sibling。上图 fiber tree 中标签为 a 的 fiber 就没有 child 和 sibling，于是向上寻找最后找到了它的叔叔，标签为 h2 的 fiber。
+以上图中的 fiber tree 为例，当我们执行完 div 的 fiber 的任务时，`nextUnitOfWork` 指针就会指向 h1 元素 的 fiber。
 
-如果该 fiber 没有叔叔呢？我们将会继续沿着 parent 向上寻找，直到找到一个存在 sibling 的 parent 或者到达根 root。如果是后者的话，那就说明我们已经执行完了本次渲染 render 的所有任务。
+如果一个 fiber 的 child 指针指向的元素为空，即该 fiber 不存在 child : **我们将会指定 sibling 对应的 fiber 作为 `nextUnitOfWork`**。
+
+**如果一个 fiber 即没有 child 也没有 sibling**， `nextUnitOfWork` 指向为这个 fiber 的 uncle，也就是这个 fiber 的父节点 parent 的兄弟节点 sibling。
+
+上图 fiber tree 中标签为 a 的 fiber 就没有 child 和 sibling，于是向上寻找最后找到了它的叔叔，标签为 h2 的 fiber。
+
+如果该 fiber 没有叔叔呢？我们就会继续沿着 parent 向上寻找，直到找到一个存在 sibling 的 parent 或者最终到 `根 root`。如果是后者的话，那就说明我们已经执行完了本次渲染 render 的所有任务。
 
 ---
 
@@ -1533,7 +1552,7 @@ Didact.render(element, container)
 
 ---
 
-完整的 performUnitOfWork 方法如下：
+完整的 performUnitOfWork 方法：
 
 ```js focus=40:84
 
@@ -1549,7 +1568,11 @@ Didact.render(element, container)
 
 ```
 
-每次我们在处理一个元素时都需要将其新建的节点添加到 DOM 上去。但是不要忘了，浏览器能够在我们渲染完整棵 fiber tree 之前中断我们的渲染过程的。出现这种情况时，用户将会看到一个不完整的 UI 界面，那是我们不想看到的。
+每次我们在处理一个元素时都需要将其新建的节点添加到 DOM 上去。
+
+但是不要忘了，浏览器能够在我们渲染完整棵 fiber tree 之前中断我们的渲染过程。
+
+出现这种情况时，用户将会看到一个不完整的 UI 界面，那是我们不想看到的。
 
 ---
 
@@ -1655,7 +1678,7 @@ Didact.render(element, container)
 
 ---
 
-相对地，我们需要保持对 fiber tree 的根 root 的引用。我们将其引用命名为 wipRoot（work in progress root）。
+移除后我们换种方法,首先保存对 fiber tree 的根 root 的引用,将其引用命名为 `wipRoot` （work in progress root）。
 
 ```js focus=18,24,28
 function createDom(fiber) {
@@ -1759,7 +1782,7 @@ Didact.render(element, container)
 
 ---
 
-一旦我们处理完了所有任务单元（可以根据 nextUnitOfWork 是否为空来判断），我们再将整棵 fiber tree 提交到 DOM 上。
+只有处理完了所有任务单元（可以根据 nextUnitOfWork 是否为空来判断），我们才把整棵 fiber tree 提交到 DOM 上。
 
 ```js focus=17:19,34,43:45,48
 function createDom(fiber) {
@@ -1999,11 +2022,11 @@ Didact.render(element, container)
 
 目前为止，我们只是实现了添加节点到 DOM 上，删除和更新呢？
 
-这就是本节要实现的目标，为此我们需要将本次渲染的 fiber tree 即 wipRoot 与上一次提交到 DOM 上的 fiber tree 进行比较。
+这就是下面我们需要实现的目标,为此我们要把本次渲染的 `fiber tree` 即 `wipRoot` 和 上一次提交到 DOM 上的 `fiber tree` 进行比较。
 
 ---
 
-那么，在每次提交阶段完成时，我们就需要保持对本次提交到 DOM 上的 fiber tree 的引用，以方便下次比较，我们将其引用命名为 currentRoot。同时，我们也为每个 fiber 添加 alternate 属性，指向旧的 fiber，即在上个提交阶段我们添加到 DOM 上的 fiber。
+那么为了方便下次比较，在每次提交阶段完成时，我们就需要保存对本次提交到 DOM 上的 fiber tree 的引用，其引用命名为 `currentRoot`。同时，我们也为每个 fiber 添加 alternate 属性，指向旧的 fiber，即在上个提交阶段我们添加到 DOM 上的 fiber。
 
 ```js focus=17,19,21,33:34,39:40,42,45
 function createDom(fiber) {
@@ -2130,7 +2153,7 @@ Didact.render(element, container)
 
 ---
 
-接着，让我们从 performUnitOfWork 方法中抽离创建新的 fiber 那部分代码，原代码如下：
+接着，让我们从 performUnitOfWork 方法中抽离创建新的 fiber 那部分代码，原代码：
 
 ```js focus=66:105
 
@@ -2138,7 +2161,7 @@ Didact.render(element, container)
 
 ---
 
-将抽离出来的方法放到 reconcileChildren 方法中，改造后的代码如下：
+将抽离出来的方法放到 reconcileChildren 方法中，改造后的代码：
 
 ```js focus=66,71:72,86
 function createDom(fiber) {
@@ -2281,7 +2304,7 @@ Didact.render(element, container)
 
 ---
 
-在 reconcileChildren 这个方法中，我们将对旧的 fiber 与新的元素进行调和 reconclie。
+在 reconcileChildren 这个方法中，我们将对旧的 fiber 与新的元素进行调和 reconclie,也就是常说的 diff 算法。
 
 ```js focus=86
 
@@ -2289,9 +2312,11 @@ Didact.render(element, container)
 
 ---
 
-我们同时迭代旧 fiber 的子元素 wipFiber.alternate 以及 elements 数组中我们想要调和的元素。
+我们同时迭代旧 fiber (`wipFiber.alternate`) 的子元素 以及` elements` 数组中我们想要调和的元素。
 
-如果我们忽略同时迭代链表和数组所需要注意的那些通用代码，只关心其中最重要的部分：oldFiber 和 element，element 是本次调和我们想要渲染到 DOM 上的 fiber，oldFiber 是我们上次渲染到 DOM 上的 fiber。我们需要比较它们的差异。
+如果我们忽略同时迭代链表和数组所需要注意的那些通用代码，只关心其中最重要的部分：
+
+oldFiber 和 element，element 是本次调和我们想要渲染到 DOM 上的 fiber，oldFiber 是我们上次渲染到 DOM 上的 fiber。我们需要比较它们的差异。
 
 ```js focus=86:89,91:99
 function createDom(fiber) {
@@ -2443,10 +2468,10 @@ Didact.render(element, container)
 1. 如果 oldFiber 和 element 的 type 一样，我们可以保留其 DOM 节点，只更新其中的属性 props。
 2. 如果它们的 type 不一样：
 
-- 对于 element，我们需要创建新的 DOM 节点。
-- 对于 oldFiber，我们需要移除旧的 DOM 节点。
+- 新的 element 不在 oldFiber 集合当中，我们需要创建新的 DOM 节点。
+- oldFiber 存在于 新的 element 集合中 ， 但对应的 element 不同则不能直接复用和更新，需要移除旧的 DOM 节点。
 
-3. 在真正的 React 中，这里会使用 key 来优化调和。比如，它能够探测到数组中元素的位置是否发生变化。
+在真正的 React 中，这里会使用 key 来优化调和。比如，它能够探测到数组中元素的位置是否发生变化。
 
 ```js focus=99:112
 function createDom(fiber) {
@@ -2607,9 +2632,9 @@ Didact.render(element, container)
 ---
 
 如果 oldFiber 和 element 的 type 一致时，我们创建一个新的 fiber，其中保持原来的 DOM 不变，属性 props 采用 element.props。
-同时我们为新的 fiber 新增了 effectTag 属性。这个属性我们将会在后面的提交阶段用到。
+同时我们为新的 fiber 新增了 effectTag 属性。这个属性我们将会在后面的`commit`阶段用到。
 
-```js focus=114:123
+```js focus=99:113
 function createDom(fiber) {
   const dom =
     fiber.type == "TEXT_ELEMENT"
@@ -2774,7 +2799,7 @@ Didact.render(element, container)
 
 ---
 
-对于 type 不一致的情况，我们为 element 创建新的 fiber，并将 effectTag 设置为 PLACEMENT。
+当需要创建一个新的 DOM 节点的情况， effectTag 就会设置为 PLACEMENT。
 
 ```js focus=114:123
 function createDom(fiber) {
@@ -2949,7 +2974,7 @@ Didact.render(element, container)
 
 ---
 
-对于 oldFiber，我们需要删除对应的 node。因为不会创建新的 fiber，所以我们在旧的 fiber 上设置 effectTag 为 DELETION。
+当我们需要删除对应的节点的时候。因为不会创建新的 fiber，所以我们在旧的 fiber 上设置 effectTag 为 DELETION。
 
 ```js focus=125:128
 function createDom(fiber) {
@@ -3305,7 +3330,7 @@ Didact.render(element, container)
 
 接着，我们在提交阶段更新 DOM 时，只需要操作 deletions 数组中的 fiber 就可以了。
 
-```js focus=17,19,22
+```js focus=17,18,22
 function createDom(fiber) {
   const dom =
     fiber.type == "TEXT_ELEMENT"
@@ -5432,13 +5457,16 @@ const container = document.getElementById("root")
 Didact.render(element, container)
 ```
 
-如果我们将以上的 JSX 转换为 JS，将会是下面这个样子：
-`function App(props) {
+如果我们把 JSX 转换为 JS，将会是下面这个样子：
+
+```
+function App(props) {
   return Didact.createElement("h1", null, "Hi ", props.name);
 }
 const element = Didact.createElement(App, {
   name: "foo",
-});`
+});
+```
 
 ---
 
@@ -6828,7 +6856,7 @@ Didact.render(element, container)
 
 这是我们从示例中调用计数器函数的地方。在该功能中，我们称为 useState。
 
-```js focus=179:181
+```js focus=174:181
 function createDom(fiber) {
   const dom =
     fiber.type == "TEXT_ELEMENT"
@@ -7110,7 +7138,7 @@ Didact.render(element, container)
 
 ---
 
-我们需要在调用函数组件之前初始化一些全局变量，以便我们可以在 Usestate 函数内使用它们。
+我们需要在调用函数组件之前初始化一些全局变量，以便我们可以在 useState 函数内使用它们。
 
 首先，我们设置 wipFiber（work in process fiber）。
 

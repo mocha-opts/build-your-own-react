@@ -1,11 +1,11 @@
 .ch-scrollycoding-sticker .ch-code-scroll-parent {
-  height: 70vh;
+  height: 75vh;
 }
 .ch-scrollycoding-content {
-  width: 30vw;
+  width: 40vw;
 }
 .ch-scrollycoding-step-content {
-  width: 30vw;
+  width: 40vw;
 
   display: flex;
   flex-direction: column;
@@ -19,6 +19,7 @@
   border-bottom-left-radius: 0;
   transition: cubic-bezier(0.86, 0, 0.07, 1);
   font-size: 18px;
+  color: rgb(38, 38, 38);
 }
 .ch-scrollycoding-step-content:not([data-selected]) {
   color: gainsboro;
