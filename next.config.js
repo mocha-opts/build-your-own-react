@@ -11,10 +11,10 @@ const withMDX = require("@next/mdx")({
   options: {
     remarkPlugins: [[remarkCodeHike, { theme }]],
   },
-  ...nextConfig,
 });
 
 module.exports = withMDX({
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
   eslint: { ignoreDuringBuilds: true },
+  ...nextConfig,
 });
